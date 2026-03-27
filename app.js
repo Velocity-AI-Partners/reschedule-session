@@ -4,11 +4,11 @@ var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 var LOGO_BASE = 'https://jjckotsrhuxxftwmdlwc.supabase.co/storage/v1/object/public/location-logos/logos/';
 
 var LOCATIONS = {
-  'stretch-zone-westborough': { name: 'Stretch Zone Westborough', logo: LOGO_BASE + 'stretch-zone-westborough.png' },
-  'stretch-zone-west-boylston': { name: 'Stretch Zone West Boylston', logo: LOGO_BASE + 'stretch-zone-west-boylston.png' },
-  'stretch-zone-baton-rouge': { name: 'Stretch Zone Baton Rouge', logo: LOGO_BASE + 'stretch-zone-west-boylston.png' },
-  'stretch-zone-dfw': { name: 'Stretch Zone Southlake', logo: LOGO_BASE + 'stretch-zone-west-boylston.png' },
-  'stretchlab-carlsbad': { name: 'StretchLab Carlsbad', logo: LOGO_BASE + 'stretchlab-carlsbad.webp' }
+  'stretch-zone-westborough': { name: 'Stretch Zone Westborough', logo: LOGO_BASE + 'stretch-zone-westborough-1771338230095.png' },
+  'stretch-zone-west-boylston': { name: 'Stretch Zone West Boylston', logo: LOGO_BASE + 'stretch-zone-west-boylston-1771338222411.png' },
+  'stretch-zone-baton-rouge': { name: 'Stretch Zone Baton Rouge', logo: LOGO_BASE + 'stretch-zone-west-boylston-1771338222411.png' },
+  'stretch-zone-dfw': { name: 'Stretch Zone Southlake', logo: LOGO_BASE + 'stretch-zone-west-boylston-1771338222411.png' },
+  'stretchlab-carlsbad': { name: 'StretchLab Carlsbad', logo: LOGO_BASE + 'stretchlab-carlsbad-1771338129474.webp' }
 };
 
 // State
