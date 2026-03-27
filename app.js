@@ -29,7 +29,8 @@ var availableSlots = [];
     instructor: sp.get('instructor') || '',
     bookingId: sp.get('booking_id') || sp.get('bookingId') || '',
     memberId: sp.get('member_id') || sp.get('memberId') || '',
-    bookingRequestId: sp.get('request_id') || sp.get('requestId') || ''
+    bookingRequestId: sp.get('request_id') || sp.get('requestId') || '',
+    sessionSizeId: sp.get('session_size_id') || sp.get('sessionSizeId') || ''
   };
 
   var loc = LOCATIONS[params.location];
@@ -231,7 +232,7 @@ function confirmReschedule() {
     newTimeLocal: selectedSlot.timeLocal,
     instructorId: selectedSlot.instructorId,
     instructorName: selectedSlot.instructor,
-    sessionSizeId: selectedSlot.sessionSizeId
+    sessionSizeId: params.sessionSizeId ? parseInt(params.sessionSizeId, 10) : selectedSlot.sessionSizeId
   };
 
   apiFetch('', { method: 'POST', body: JSON.stringify(body) })
