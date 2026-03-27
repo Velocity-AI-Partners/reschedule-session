@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reschedule Your Session</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <img id="location-logo" class="logo" src="" alt="Location Logo">
+      <h1>Reschedule Your Session</h1>
+      <p id="greeting" class="subtitle"></p>
+    </header>
+
+    <section id="current-booking" class="card">
+      <h2 class="card-title">Current Booking</h2>
+      <div class="booking-details">
+        <div class="detail-row">
+          <span class="detail-label">Date</span>
+          <span id="current-date" class="detail-value"></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Time</span>
+          <span id="current-time" class="detail-value"></span>
+        </div>
+        <div class="detail-row" id="current-instructor-row">
+          <span class="detail-label">Practitioner</span>
+          <span id="current-instructor" class="detail-value"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="step-date" class="card step">
+      <h2 class="card-title">Pick a New Date</h2>
+      <p class="step-hint">Select from available dates below</p>
+      <div id="date-loading" class="loading">
+        <div class="spinner"></div>
+        <span>Loading available dates...</span>
+      </div>
+      <div id="date-grid" class="date-grid"></div>
+      <div id="date-error" class="error-msg" style="display:none"></div>
+    </section>
+
+    <section id="step-time" class="card step" style="display:none">
+      <h2 class="card-title">Pick a New Time</h2>
+      <p id="time-hint" class="step-hint"></p>
+      <div id="time-loading" class="loading" style="display:none">
+        <div class="spinner"></div>
+        <span>Loading available times...</span>
+      </div>
+      <div id="time-grid" class="time-grid"></div>
+      <div id="time-error" class="error-msg" style="display:none"></div>
+    </section>
+
+    <section id="step-confirm" class="card step" style="display:none">
+      <h2 class="card-title">Confirm Reschedule</h2>
+      <div class="confirm-summary">
+        <div class="confirm-change">
+          <div class="confirm-old">
+            <span class="confirm-label">From</span>
+            <span id="confirm-old-date" class="confirm-value"></span>
+            <span id="confirm-old-time" class="confirm-value"></span>
+          </div>
+          <div class="confirm-arrow">&#8594;</div>
+          <div class="confirm-new">
+            <span class="confirm-label">To</span>
+            <span id="confirm-new-date" class="confirm-value highlight"></span>
+            <span id="confirm-new-time" class="confirm-value highlight"></span>
+          </div>
+        </div>
+        <div id="confirm-instructor" class="confirm-instructor"></div>
+      </div>
+      <button id="btn-confirm" class="btn-primary" onclick="confirmReschedule()">
+        <span id="btn-confirm-text">Confirm Reschedule</span>
+        <span id="btn-confirm-loading" style="display:none">Rescheduling...</span>
+      </button>
+      <button class="btn-secondary" onclick="resetSelection()">Start Over</button>
+    </section>
+
+    <section id="success-screen" style="display:none">
+      <div class="success-content">
+        <div class="success-icon">&#10003;</div>
+        <h2>You're All Set!</h2>
+        <p class="success-msg">Your session has been rescheduled.</p>
+        <div class="success-details">
+          <div class="detail-row">
+            <span class="detail-label">New Date</span>
+            <span id="success-date" class="detail-value"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">New Time</span>
+            <span id="success-time" class="detail-value"></span>
+          </div>
+          <div class="detail-row" id="success-instructor-row">
+            <span class="detail-label">Practitioner</span>
+            <span id="success-instructor" class="detail-value"></span>
+          </div>
+        </div>
+        <p class="success-footer">We look forward to seeing you!</p>
+      </div>
+    </section>
+
+    <div id="error-banner" class="error-banner" style="display:none">
+      <p id="error-message"></p>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
