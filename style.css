@@ -9,7 +9,7 @@ body {
 .container { max-width: 480px; margin: 0 auto; padding: 24px 20px 40px; }
 
 .header { text-align: center; padding-bottom: 24px; border-bottom: 1px solid #f0f0f0; margin-bottom: 24px; }
-.logo { width: 200px; height: 200px; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 16px; object-fit: cover; }
+.logo { width: 200px; height: auto; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 16px; object-fit: contain; }
 .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
 .subtitle { font-size: 15px; color: #555555; }
 
@@ -86,7 +86,7 @@ body {
 @media (max-width: 400px) {
   .container { padding: 16px 16px 32px; }
   .header h1 { font-size: 20px; }
-  .logo { width: 160px; height: 160px; }
+  .logo { width: 160px; height: auto; }
   .date-grid { gap: 6px; }
   .date-btn { padding: 10px 6px; }
   .date-btn .date-num { font-size: 16px; }
