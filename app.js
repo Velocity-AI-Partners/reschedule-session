@@ -98,23 +98,7 @@ function loadAvailableDates() {
         error.style.display = 'block';
         return;
       }
-      // Only show dates within the next 7 days
-      var today = new Date();
-      today.setHours(0, 0, 0, 0);
-      var maxDate = new Date(today);
-      maxDate.setDate(maxDate.getDate() + 7);
-
-      var dates = data.dates.filter(function(dateStr) {
-        var d = new Date(dateStr + 'T12:00:00');
-        return d >= today && d <= maxDate;
-      });
-
-      if (dates.length === 0) {
-        error.textContent = 'No available dates in the next 7 days. Please call the studio to reschedule.';
-        error.style.display = 'block';
-        return;
-      }
-
+      var dates = data.dates.slice(0, 7);
       dates.forEach(function(dateStr) {
         var d = new Date(dateStr + 'T12:00:00');
         var btn = document.createElement('button');
