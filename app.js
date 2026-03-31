@@ -1,6 +1,6 @@
 // Configuration
 var EDGE_FN_BASE = 'https://jjckotsrhuxxftwmdlwc.supabase.co/functions/v1/reschedule-session';
-var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqY2tvdHNyaHV4eGZ0d21kbHdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzcwNTYzNTAsImV4cCI6MjA1MjYzMjM1MH0.3BqMqle3VaBOpKPKLn8oGKijSq-11FJCibnOkqLaiPQ';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqY2tvdHNyaHV4eGZ0d21kbHdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4MTU4ODUsImV4cCI6MjA4MzM5MTg4NX0.AAQSDK4gu7lDUrFFk540HHELQ85S0vyATNQT6up-pXE';
 var LOGO_BASE = 'https://jjckotsrhuxxftwmdlwc.supabase.co/storage/v1/object/public/location-logos/logos/';
 
 var LOCATIONS = {
