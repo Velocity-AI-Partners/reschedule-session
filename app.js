@@ -90,7 +90,9 @@ function loadAvailableDates() {
   grid.innerHTML = '';
   error.style.display = 'none';
 
-  apiFetch('?action=availability&location=' + encodeURIComponent(params.location), { method: 'GET' })
+  var availUrl = '?action=availability&location=' + encodeURIComponent(params.location);
+  if (params.sessionSizeId) availUrl += '&session_size_id=' + encodeURIComponent(params.sessionSizeId);
+  apiFetch(availUrl, { method: 'GET' })
     .then(function(data) {
       loading.style.display = 'none';
       if (!data.dates || data.dates.length === 0) {
@@ -137,7 +139,9 @@ function loadTimeSlotsForDate(dateStr) {
   hint.textContent = 'Available times for ' + d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
   document.getElementById('step-confirm').style.display = 'none';
 
-  apiFetch('?action=slots&location=' + encodeURIComponent(params.location) + '&date=' + dateStr, { method: 'GET' })
+  var slotsUrl = '?action=slots&location=' + encodeURIComponent(params.location) + '&date=' + dateStr;
+  if (params.sessionSizeId) slotsUrl += '&session_size_id=' + encodeURIComponent(params.sessionSizeId);
+  apiFetch(slotsUrl, { method: 'GET' })
     .then(function(data) {
       loading.style.display = 'none';
       availableSlots = data.slots || [];
