@@ -16,6 +16,15 @@ var params = {};
 var selectedDate = null;
 var selectedSlot = null;
 var availableSlots = [];
+var activeDurationFilter = null;
+
+// Locations with multiple session durations
+var MULTI_DURATION_LOCATIONS = {
+  'stretchlab-carlsbad': [
+    { duration: 25, label: '25 Min Stretch' },
+    { duration: 50, label: '50 Min Stretch' }
+  ]
+};
 
 // Init
 (function init() {
@@ -150,16 +159,40 @@ function loadTimeSlotsForDate(dateStr) {
         error.style.display = 'block';
         return;
       }
-      availableSlots.forEach(function(slot, i) {
-        var btn = document.createElement('button');
-        btn.className = 'time-btn';
-        btn.setAttribute('data-index', i);
-        btn.innerHTML =
-          '<span class="time-value">' + slot.timeLocal + '</span>' +
-          '<span class="time-instructor">' + (slot.instructor || '') + '</span>';
-        btn.onclick = function() { selectTime(i, btn); };
-        grid.appendChild(btn);
-      });
+      var multiDur = MULTI_DURATION_LOCATIONS[params.location];
+      if (multiDur && availableSlots.some(function(s) { return s.duration; })) {
+        var toggleWrap = document.createElement('div');
+        toggleWrap.style.cssText = 'display:flex;gap:8px;justify-content:center;margin-bottom:16px;';
+        if (!activeDurationFilter) activeDurationFilter = multiDur[0].duration;
+        multiDur.forEach(function(d) {
+          var tbtn = document.createElement('button');
+          tbtn.className = 'time-btn' + (activeDurationFilter === d.duration ? ' selected' : '');
+          tbtn.style.cssText = 'flex:1;max-width:180px;padding:12px 16px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;';
+          tbtn.textContent = d.label;
+          tbtn.onclick = function() {
+            activeDurationFilter = d.duration;
+            selectedSlot = null;
+            document.getElementById('step-confirm').style.display = 'none';
+            loading.style.display = 'none';
+            grid.innerHTML = '';
+            renderTimeSlots(grid);
+          };
+          toggleWrap.appendChild(tbtn);
+        });
+        grid.appendChild(toggleWrap);
+        renderTimeSlots(grid);
+      } else {
+        availableSlots.forEach(function(slot, i) {
+          var btn = document.createElement('button');
+          btn.className = 'time-btn';
+          btn.setAttribute('data-index', i);
+          btn.innerHTML =
+            '<span class="time-value">' + slot.timeLocal + '</span>' +
+            '<span class="time-instructor">' + (slot.instructor || '') + '</span>';
+          btn.onclick = function() { selectTime(i, btn); };
+          grid.appendChild(btn);
+        });
+      }
       stepTime.scrollIntoView({ behavior: 'smooth', block: 'start' });
     })
     .catch(function(e) {
@@ -168,6 +201,40 @@ function loadTimeSlotsForDate(dateStr) {
       error.style.display = 'block';
       console.error('loadTimeSlotsForDate error:', e);
     });
+}
+
+function renderTimeSlots(grid) {
+  var existing = grid.querySelectorAll('.time-btn:not([style])');
+  existing.forEach(function(el) { if (!el.style.cssText.includes('max-width')) el.remove(); });
+  var filtered = availableSlots.filter(function(s, i) {
+    return !activeDurationFilter || s.duration === activeDurationFilter;
+  });
+  // Re-render toggle active state
+  var toggleBtns = grid.querySelectorAll('[style*="max-width"]');
+  toggleBtns.forEach(function(b) {
+    if (b.textContent.indexOf(activeDurationFilter + ' Min') >= 0) {
+      b.classList.add('selected');
+    } else {
+      b.classList.remove('selected');
+    }
+  });
+  filtered.forEach(function(slot) {
+    var origIdx = availableSlots.indexOf(slot);
+    var btn = document.createElement('button');
+    btn.className = 'time-btn';
+    btn.setAttribute('data-index', origIdx);
+    btn.innerHTML =
+      '<span class="time-value">' + slot.timeLocal + '</span>' +
+      '<span class="time-instructor">' + (slot.instructor || '') + '</span>';
+    btn.onclick = function() { selectTime(origIdx, btn); };
+    grid.appendChild(btn);
+  });
+  if (filtered.length === 0) {
+    var noMsg = document.createElement('div');
+    noMsg.style.cssText = 'text-align:center;padding:20px;color:#666;';
+    noMsg.textContent = 'No ' + activeDurationFilter + '-minute slots available on this day.';
+    grid.appendChild(noMsg);
+  }
 }
 
 function selectDate(dateStr, btn) {
@@ -239,7 +306,8 @@ function confirmReschedule() {
     newTimeLocal: selectedSlot.timeLocal,
     instructorId: selectedSlot.instructorId,
     instructorName: selectedSlot.instructor,
-    sessionSizeId: params.sessionSizeId ? parseInt(params.sessionSizeId, 10) : selectedSlot.sessionSizeId
+    sessionSizeId: params.sessionSizeId ? parseInt(params.sessionSizeId, 10) : selectedSlot.sessionSizeId,
+    duration: selectedSlot.duration || activeDurationFilter || 0
   };
 
   apiFetch('', { method: 'POST', body: JSON.stringify(body) })
